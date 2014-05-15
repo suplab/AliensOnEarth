@@ -2,7 +2,6 @@ package com.exportcore.util;
 
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -12,6 +11,7 @@ import java.util.Date;
 
 import com.apputil.entity.AlienInfoTO;
 import com.exportcore.constants.ExportConstants;
+import com.exportcore.validation.ExportFormatValidator;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
@@ -25,6 +25,13 @@ public class ExportInformationUtility {
 
 	public void exportInformation(AlienInfoTO alienInfo){
 
+		if(!validateExportFormat(alienInfo)){
+
+			System.out.println("Unknown export format provided");
+
+			return;
+		}
+
 		if(alienInfo.getExportFormat().equalsIgnoreCase(ExportConstants.EXPORTFORMATS.PDF.toString())){
 
 			exportInformationAsPDF(alienInfo);
@@ -37,8 +44,17 @@ public class ExportInformationUtility {
 		}
 
 		/* 
-		 * Ouput for New formats needs to be handled here
+		 * Ouput for New formats such as foobar needs to be handled here as done for PDF and Text
 		 */
+	}
+
+
+
+	private boolean validateExportFormat(AlienInfoTO alienInfo) {
+
+		ExportFormatValidator exportValidator = new ExportFormatValidator();
+		return exportValidator.validate(alienInfo.getExportFormat());
+
 	}
 
 	private void exportInformationAsPDF(AlienInfoTO alienInfo) {
@@ -74,7 +90,7 @@ public class ExportInformationUtility {
 	}
 
 	private void exportInformationAsTXT(AlienInfoTO alienInfo) {
-		
+
 		String fileName = new SimpleDateFormat("'AlienInformation'yyyy-MM-dd hh-mm-ss'.txt'").format(new Date());
 
 		String filePath = ExportConstants.EXPORT_PATH+fileName;
@@ -97,11 +113,11 @@ public class ExportInformationUtility {
 			bufferedWriter.append("No. of Legs: ").append(alienInfo.getNoOfLegs().toString());
 			bufferedWriter.newLine();
 			bufferedWriter.append("Home Planet: ").append(alienInfo.getHomePlanet());
-			
+
 			System.out.println("File Generated Successfully at location: " + filePath);
-			
+
 		} catch (IOException e) {
-			
+
 			System.out.println("Problem writing to the file. " + e);
 		} finally {
 			//Close the BufferedWriter
