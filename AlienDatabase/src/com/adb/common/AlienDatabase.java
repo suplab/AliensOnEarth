@@ -22,11 +22,17 @@ public class AlienDatabase {
 		/* Get details from the console */
 		readAlienInformation(alienInfo);
 		
+		
 		/*Validate the export format*/
-		if(validateExportFormat(alienInfo)){
-			/*Now to export the results*/
-			exportAlienInformation(alienInfo);
+		if(alienInfo.getExportFormat()!=null){
 			
+			if(validateExportFormat(alienInfo)){
+				/*Now to export the results*/
+				exportAlienInformation(alienInfo);
+
+			}else{
+				System.out.println("Unknown export format provided");
+			}
 		}else{
 			System.out.println("Unknown export format provided");
 		}
