@@ -1,5 +1,7 @@
 package com.adb.common;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 import com.apputil.entity.AlienInfoTO;
@@ -37,15 +39,18 @@ public class AlienDatabase {
 	private static void exportAlienInformation(AlienInfoTO alienInfo) {
 
 		System.out.println("Exporting Alien Data------------->");
-
+		
+		//Get a generic datastructure for exporting
+		Map<String, String> data = generateDataToExport(alienInfo);
+		
+		//Export the details
 		ExportInformationUtility exportUtility = new ExportInformationUtility();
-		exportUtility.exportInformation(alienInfo);
+		exportUtility.exportInformation(data, alienInfo.getExportFormat(), "AlienInformation");
 	}
 
 
 
 	private static void readAlienInformation(AlienInfoTO alienInfo) {
-
 
 		Scanner scanIn = new Scanner(System.in);
 
@@ -79,6 +84,22 @@ public class AlienDatabase {
 		}finally{
 			scanIn.close();
 		}
+	}
+	
+	
+	
+	private static Map<String, String> generateDataToExport(AlienInfoTO alienInfo){
+		
+		Map<String, String> data = new HashMap<String, String>();
+		
+		data.put("Code Name :", alienInfo.getCodeName());
+		data.put("Blood Color :", alienInfo.getBloodColor());
+		data.put("No. of Antennas :", alienInfo.getNoOfAntennas().toString());
+		data.put("No. of Legs :", alienInfo.getNoOfLegs().toString());
+		data.put("Home Planet :", alienInfo.getHomePlanet());
+		
+		return data;
+		
 	}
 
 }

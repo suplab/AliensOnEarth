@@ -9,6 +9,10 @@ public class ExportConstants {
 
 	public static final String EXPORT_PATH = "C:\\";
 	
+	public static final String EXPORTER_CLASS_PATH = "com.exportcore.exporter.impl.";
+	
+	public static final String CLASS_PREFIX = "Generate";
+	
 	public enum EXPORTFORMATS{
 		
 		/*Holds the type of formats available*/
