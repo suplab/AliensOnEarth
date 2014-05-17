@@ -1,6 +1,5 @@
 package com.exportcore.util;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Method;
@@ -68,6 +67,7 @@ public class ExportInformationUtility {
 	 
 		try {
 	 
+			//get resource file as stream
 			input = this.getClass().getClassLoader().getResourceAsStream(ExportConstants.CLASS_NAME_MAPPING);
 	 
 			// load a properties file
