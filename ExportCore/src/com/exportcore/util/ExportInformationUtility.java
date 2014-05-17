@@ -1,17 +1,13 @@
 package com.exportcore.util;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
+import java.io.FileInputStream;
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
+import java.io.InputStream;
 import java.lang.reflect.Method;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Map;
+import java.util.Properties;
 
-import com.apputil.entity.AlienInfoTO;
 import com.exportcore.constants.ExportConstants;
-import com.exportcore.validation.ExportFormatValidator;
 
 /*
  * Class: ExportInformationUtility
@@ -22,27 +18,7 @@ public class ExportInformationUtility {
 
 	public void exportInformation(Map<String , String> data, String format, String fileName){
 
-		/*if(!validateExportFormat(alienInfo)){
-
-			System.out.println("Unknown export format provided");
-
-			return;
-		}*/
-
-		/*if(alienInfo.getExportFormat().equalsIgnoreCase(ExportConstants.EXPORTFORMATS.PDF.toString())){
-
-			exportInformationAsPDF(alienInfo);
-
-		}
-
-		if(alienInfo.getExportFormat().equalsIgnoreCase(ExportConstants.EXPORTFORMATS.TXT.toString())){
-
-			exportInformationAsTXT(alienInfo);
-		}*/
-
-		/* 
-		 * Ouput for New formats such as foobar needs to be handled here as done for PDF and Text
-		 */
+		
 
 		try{
 			ClassLoader classLoader = ClassLoader.getSystemClassLoader();
@@ -51,7 +27,10 @@ public class ExportInformationUtility {
 			 * Defining the class that needs to be loaded.
 			 * Each export format is a file having name Generate<EXPORT_TYPE>.java
 			 */
-			String classToBeLoaded = ExportConstants.EXPORTER_CLASS_PATH+ExportConstants.CLASS_PREFIX+format.toUpperCase();
+			String classToBeLoaded = getClassName(format);
+			if(classToBeLoaded == null){
+				throw new ClassNotFoundException();
+			}
 
 			//Load the class
 			Class<?> requiredClass = classLoader.loadClass(classToBeLoaded);
@@ -81,6 +60,40 @@ public class ExportInformationUtility {
 	}
 
 
+	private String getClassName(String format){
+		
+		Properties prop = new Properties();
+		InputStream input = null;
+		String className = null;
+	 
+		try {
+	 
+			input = this.getClass().getClassLoader().getResourceAsStream(ExportConstants.CLASS_NAME_MAPPING);
+	 
+			// load a properties file
+			prop.load(input);
+			
+			// get the property value
+			className = prop.getProperty(format.toUpperCase());
+	 
+		} catch (IOException io) {
+			
+			System.out.println("Unable to export, since export type is unknown : " + io);
+		} finally {
+			if (input != null) {
+				try {
+					input.close();
+				} catch (IOException e) {
+					System.out.println("Unable to export : " + e);
+					
+				}
+			}
+	 
+		}
+		
+		return className;
+		
+	}
 
 
 }

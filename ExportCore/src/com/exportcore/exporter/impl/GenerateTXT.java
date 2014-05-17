@@ -11,6 +11,10 @@ import com.exportcore.constants.ExportConstants;
 import com.exportcore.exporter.IGenerateFile;
 import com.itextpdf.text.Paragraph;
 
+/*
+ * Class: GenerateTXT
+ * This class generates .txt file from an input
+ */
 public class GenerateTXT implements IGenerateFile {
 
 	@Override
@@ -36,16 +40,7 @@ public class GenerateTXT implements IGenerateFile {
 				bufferedWriter.append(entry.getKey()+" "+entry.getValue());
 			}
 			
-			/*bufferedWriter.newLine();
-			bufferedWriter.append("Code Name: ").append(alienInfo.getCodeName());
-			bufferedWriter.newLine();
-			bufferedWriter.append("Blood Color: ").append(alienInfo.getBloodColor());
-			bufferedWriter.newLine();
-			bufferedWriter.append("No. of Antennas: ").append(alienInfo.getNoOfAntennas().toString());
-			bufferedWriter.newLine();
-			bufferedWriter.append("No. of Legs: ").append(alienInfo.getNoOfLegs().toString());
-			bufferedWriter.newLine();
-			bufferedWriter.append("Home Planet: ").append(alienInfo.getHomePlanet());*/
+			
 
 			System.out.println("File Generated Successfully at location: " + filePath);
 

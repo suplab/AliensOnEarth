@@ -13,6 +13,10 @@ import com.itextpdf.text.Document;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
 
+/*
+ * Class: GeneratePDF
+ * This class generates .pdf file from an input
+ */
 public class GeneratePDF implements IGenerateFile {
 
 	@Override
@@ -37,11 +41,7 @@ public class GeneratePDF implements IGenerateFile {
 				document.add(new Paragraph(entry.getKey()+" "+entry.getValue()));
 			}
 			
-			/*document.add(new Paragraph("Code Name: " + alienInfo.getCodeName()));
-			document.add(new Paragraph("Blood Color: " + alienInfo.getBloodColor()));
-			document.add(new Paragraph("No. of Antennas: " + alienInfo.getNoOfAntennas().toString()));
-			document.add(new Paragraph("No. of Legs: " + alienInfo.getNoOfLegs().toString()));
-			document.add(new Paragraph("Home Planet: " + alienInfo.getHomePlanet()));*/
+			
 
 			document.close();
 			file.close();
