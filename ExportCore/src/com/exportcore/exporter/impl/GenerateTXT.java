@@ -9,7 +9,6 @@ import java.util.Map;
 
 import com.exportcore.constants.ExportConstants;
 import com.exportcore.exporter.IGenerateFile;
-import com.itextpdf.text.Paragraph;
 
 /*
  * Class: GenerateTXT
