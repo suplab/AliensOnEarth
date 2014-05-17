@@ -1,6 +1,6 @@
 package com.adb.common;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -90,7 +90,9 @@ public class AlienDatabase {
 	
 	private static Map<String, String> generateDataToExport(AlienInfoTO alienInfo){
 		
-		Map<String, String> data = new HashMap<String, String>();
+		
+		//Using LinkedHashMap to preserve the insertion order
+		Map<String, String> data = new LinkedHashMap<String, String>();
 		
 		data.put("Code Name :", alienInfo.getCodeName());
 		data.put("Blood Color :", alienInfo.getBloodColor());
